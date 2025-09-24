@@ -60,7 +60,7 @@
 --secondary-color: #76885b;
 --default-color:   #24282b;
 --neutral-color:   #dddddd;
-
+```
 ---
 # 🌿 GitHub Convention
 
