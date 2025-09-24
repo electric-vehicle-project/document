@@ -76,7 +76,6 @@
 | **Release** (chuẩn bị phát hành) | `release/<version>` | `release/1.0.0` |
 
 👉 Khi bắt đầu làm:
-```bash
 git checkout -b feature/login-page
 ## 2. Commit Convention
 - **feat**: Thêm tính năng mới.  
