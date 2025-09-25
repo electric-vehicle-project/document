@@ -92,3 +92,11 @@ git checkout -b feature/login-page
   Ví dụ: `test: add unit test for login service`  
 - **chore**: Cập nhật công cụ, cấu hình, không ảnh hưởng logic sản phẩm.  
   Ví dụ: `chore: update dependencies`
+
+---
+👉 RESOURCES:
+- **DRIVE CỦA THẦY**: https://drive.google.com/drive/folders/1knPioV7x4AP9kpMcXSnoUmxvQQa2POaD
+- **FIGMA**: https://www.figma.com/design/kkzKtCGMOUbZvQ28taieeq/EMOB?node-id=1-55&t=WiJ96yI8KLM5noFV-0
+- **USECASE DIAGRAM**: https://drive.google.com/file/d/1SPvgSIz0pLcHsAXjt_-iX4Nuomv9oLWE/view
+- **ERD**: https://drive.google.com/file/d/1m4SbslLmKuduNeCj6kPdxNauEpzCLl4J/view
+
