@@ -1,102 +1,131 @@
-# 📘 React Project Coding Convention
+# 📖 SpringBoot Project Coding Convention
 
 ## 📂 Cấu trúc thư mục
 
-| **Thư mục / File** | **Vai trò chính** |
-|---------------------|-------------------|
-| **components/**    | Các UI components tái sử dụng, tổ chức theo **Atomic Design** (atoms, molecules, organisms, templates). |
-| **config/**        | Cấu hình chung cho ứng dụng (env, constants, theme, router config,…). |
-| **hook/**          | Custom React hooks để tái sử dụng logic (`useAuth`, `useFetch`, …). |
-| **layout/**        | Layout tổng thể (Header, Sidebar, Footer, AppLayout,…). |
-| **model/**         | Mock data / fake data phục vụ phát triển & prototype UI (không dùng cho production). |
-| **page/**          | Các trang chính (Home, Login, Dashboard…), mapping trực tiếp với route. |
-| **redux/**         | Quản lý state với **Redux Toolkit**: `store/`, `slice/`, `middleware/`, `persist/`. |
-| **service/**       | Tầng service giao tiếp với API/backend: axios instance, API methods. |
-| **utils/**         | Các hàm tiện ích (formatDate, validateEmail, debounce,…). |
-| **App.jsx**        | File root chứa khung ứng dụng (routing, provider, layout). |
-| **index.css**      | CSS global áp dụng cho toàn app (reset, global style, theme). |
-| **main.jsx**       | Điểm khởi đầu, render React vào DOM root, khởi tạo provider (Redux, Router…). |
-| **deploy.sh**      | Script tự động hóa **deploy** lên server. |
-| **.env/**          | File môi trường (API_URL, TOKEN_KEY,…), không commit lên git (nếu chứa secret). |
+| **Thư mục / File**   | **Vai trò chính**                                                        |
+| -------------------- | ------------------------------------------------------------------------ |
+| **config/**          | Cấu hình chung (Security, CORS, Swagger, DataSource…).                   |
+| **controller/**      | REST API endpoints (lớp giao tiếp với client, request/response mapping). |
+| **dto/**             | Data Transfer Objects (Request/Response).                                |
+| **entity/**          | JPA Entities ánh xạ với bảng DB.                                         |
+| **exception/**       | Xử lý lỗi, `GlobalExceptionHandler`, custom exception.                   |
+| **repository/**      | Tầng giao tiếp DB (`JpaRepository`, `CrudRepository`).                   |
+| **service/**         | Business logic, xử lý dữ liệu.                                           |
+| **mapper/**          | Map dữ liệu giữa Entity ↔ DTO (dùng MapStruct hoặc thủ công).            |
+| **util/**            | Các hàm tiện ích (validation, date utils,…).                             |
+| **security/**        | Xác thực/ủy quyền (JWT, Spring Security).                                |
+| **Application.java** | File root chạy ứng dụng Spring Boot.                                     |
+| **resources/**       | Cấu hình (`application.yml`), template, static files.                    |
+| **test/**            | Unit test & integration test.                                            |
+| **deploy.sh**        | Script build/deploy (Maven/Gradle).                                      |
+| **.env/**            | File môi trường (DB_URL, SECRET_KEY,…), không commit.                    |
 
 ---
-## 🔤 2. Quy tắc đặt tên
 
-- **Component (React)**: PascalCase  
-  - Ví dụ: `UserProfile.tsx`, `LoginForm.tsx`
+## 🔤 Quy tắc đặt tên
 
-- **Hook (Custom hook)**: bắt đầu bằng `useXxx`  
-  - Ví dụ: `useAuth.ts`, `useFetch.ts`
+- **Package**: lowercase, không underscore
 
-- **File TypeScript thường**: camelCase  
-  - Ví dụ: `formatDate.ts`, `validateEmail.ts`
+  - Ví dụ: `com.company.project.controller`
 
-- **Folder**: lowercase hoặc kebab-case  
-  - Ví dụ: `user-profile/`, `auth/`
+- **Class**: PascalCase
 
-- **Biến, hàm**: camelCase  
-  - Ví dụ: `handleSubmit`, `userName`
+  - Ví dụ: `UserController`, `AuthService`
 
-- **Hằng số**: UPPER_CASE  
-  - Ví dụ: `API_BASE_URL`, `DEFAULT_TIMEOUT`
+- **Interface**: PascalCase, có hậu tố rõ ràng
 
-- **Kiểu dữ liệu / Interface / Type**: PascalCase, có prefix rõ ràng  
-  - Interface: `IUser`, `IProduct`  
-  - Type: `UserRole`, `AuthResponse`  
-  - Enum: PascalCase + giá trị UPPER_CASE  
-    ```ts
-    enum UserRole {
-      ADMIN = "ADMIN",
-      USER = "USER",
-    }
-    ```
+  - Ví dụ: `UserRepository`, `IUserService`
 
-- **Generic Type**: đặt tên ngắn gọn, chữ in hoa  
-  - Ví dụ: `T`, `K`, `V`, hoặc có ý nghĩa hơn: `TUser`, `TResponse`
-## 🎨 Biến màu chung
+- **Biến, hàm**: camelCase
 
-```css
---primary-color:   #627254;
---secondary-color: #76885b;
---default-color:   #24282b;
---neutral-color:   #dddddd;
-```
----
+  - Ví dụ: `findByEmail`, `getUserName`
+
+- **Hằng số**: UPPER_CASE
+
+  - Ví dụ: `DEFAULT_PAGE_SIZE`, `API_KEY`
+
+- **Entity**: PascalCase, số ít (map với bảng DB)
+
+  - Ví dụ: `User`, `ProductOrder`
+
+- **DTO**: PascalCase + hậu tố `Dto`
+
+  - Ví dụ: `UserResponseDto`, `LoginRequestDto`
+
+- **Enum**: PascalCase + giá trị UPPER_CASE
+  ```java
+  public enum UserRole {
+      ADMIN,
+      USER
+  }
+  ```
+
+## ⚙️ Config & Constants
+
+### 🔑 Config
+
+- Dùng **application.yml** thay vì `.properties` để dễ đọc & tổ chức.
+- Secrets (DB, JWT, API Key) lưu trong `.env` hoặc **Spring Cloud Config**, không commit lên Git.
+- Ví dụ:
+  ```yaml
+  spring:
+    datasource:
+      url: ${DB_URL}
+      username: ${DB_USER}
+      password: ${DB_PASS}
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: 3600000
+  ```
+
+### 🎯Constants
+
+- Đặt trong package `constant`
+- Quy tắc đặt tên: `UPPER_CASE`
+
 # 🌿 GitHub Convention
 
 ## 1. Branch Naming Convention
+
 - Dùng **kebab-case** (chữ thường, dấu `-` ngăn cách).
 - Prefix theo loại nhánh:
 
-| Loại nhánh | Cách đặt tên | Ví dụ |
-|------------|--------------|-------|
-| **Feature** (chức năng mới) | `feature/<tên>` | `feature/login-page` |
-| **Fix** (sửa bug) | `fix/<tên>` | `fix/wrong-password-validation` |
-| **Hotfix** (sửa gấp production) | `hotfix/<tên>` | `hotfix/payment-crash` |
-| **Release** (chuẩn bị phát hành) | `release/<version>` | `release/1.0.0` |
+| Loại nhánh                       | Cách đặt tên        | Ví dụ                         |
+| -------------------------------- | ------------------- | ----------------------------- |
+| **Feature** (tính năng mới)      | `feature/<tên>`     | `feature/user-authentication` |
+| **Fix** (sửa bug)                | `fix/<tên>`         | `fix/null-pointer-login`      |
+| **Hotfix** (sửa gấp production)  | `hotfix/<tên>`      | `hotfix/jwt-expiry-bug`       |
+| **Release** (chuẩn bị phát hành) | `release/<version>` | `release/1.0.0`               |
 
-👉 Khi bắt đầu làm:
-git checkout -b feature/login-page
-## 2. Commit Convention
-- **feat**: Thêm tính năng mới.  
-  Ví dụ: `feat: add login form validation`  
-- **fix**: Sửa lỗi.  
-  Ví dụ: `fix: resolve crash when user logs out`  
-- **docs**: Thay đổi tài liệu (README, wiki, ...).  
-  Ví dụ: `docs: update API usage guide`  
-- **style**: Thay đổi liên quan đến format, convention, không ảnh hưởng logic.  
-  Ví dụ: `style: reformat code with prettier`  
-- **refactor**: Thay đổi code nhưng không thêm tính năng hoặc sửa lỗi.  
-  Ví dụ: `refactor: simplify user profile component`  
-- **test**: Thêm hoặc sửa test.  
-  Ví dụ: `test: add unit test for login service`  
-- **chore**: Cập nhật công cụ, cấu hình, không ảnh hưởng logic sản phẩm.  
-  Ví dụ: `chore: update dependencies`
+👉 Tạo nhánh mới:
+
+```bash
+git checkout -b feature/user-authentication
+```
+
+### 2. Commit Message Convention
+
+Commit message cần **rõ ràng, ngắn gọn** và có **prefix theo chuẩn**:
+
+| Prefix       | Ý nghĩa                                        | Ví dụ                                         |
+| ------------ | ---------------------------------------------- | --------------------------------------------- |
+| **feat**     | Thêm tính năng mới                             | `feat: implement JWT authentication`          |
+| **fix**      | Sửa lỗi                                        | `fix: resolve NPE in user service`            |
+| **docs**     | Cập nhật tài liệu (README, wiki, ...)          | `docs: update API usage guide`                |
+| **style**    | Format code, convention, không ảnh hưởng logic | `style: reformat code with Google Java Style` |
+| **refactor** | Thay đổi code nhưng không thêm tính năng/bug   | `refactor: extract email validation util`     |
+| **test**     | Thêm/sửa test                                  | `test: add unit test for AuthService`         |
+| **chore**    | Cập nhật tool, build, CI/CD, dependencies      | `chore: upgrade Spring Boot to 3.3.0`         |
 
 ---
-👉 RESOURCES:
-- **DRIVE CỦA THẦY**: https://drive.google.com/drive/folders/1knPioV7x4AP9kpMcXSnoUmxvQQa2POaD
-- **FIGMA**: https://www.figma.com/design/kkzKtCGMOUbZvQ28taieeq/EMOB?node-id=1-55&t=WiJ96yI8KLM5noFV-0
-- **USECASE DIAGRAM**: https://drive.google.com/file/d/1SPvgSIz0pLcHsAXjt_-iX4Nuomv9oLWE/view
-- **ERD**: https://drive.google.com/file/d/1m4SbslLmKuduNeCj6kPdxNauEpzCLl4J/view
 
+### 3. Best Practices
+
+- Một commit = **một thay đổi logic rõ ràng**.
+- Không commit code **chưa chạy được**.
+- Tránh commit file build/IDE: `target/`, `.idea/`, `*.iml`, …
+- Luôn viết commit message bằng **tiếng Anh** (ngắn gọn, dễ hiểu).
