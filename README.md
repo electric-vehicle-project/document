@@ -193,4 +193,11 @@ Commit message cần **rõ ràng, ngắn gọn** và có **prefix theo chuẩn**
 --neutral-color:   #dddddd;
 
 ```
+---
+👉 RESOURCES:
+- **DRIVE CỦA THẦY**: https://drive.google.com/drive/folders/1knPioV7x4AP9kpMcXSnoUmxvQQa2POaD
+- **FIGMA**: https://www.figma.com/design/kkzKtCGMOUbZvQ28taieeq/EMOB?node-id=1-55&t=WiJ96yI8KLM5noFV-0
+- **USECASE DIAGRAM**: https://drive.google.com/file/d/1SPvgSIz0pLcHsAXjt_-iX4Nuomv9oLWE/view
+- **ERD**: https://drive.google.com/file/d/1m4SbslLmKuduNeCj6kPdxNauEpzCLl4J/view
+
 
