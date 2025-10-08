@@ -199,5 +199,6 @@ Commit message cần **rõ ràng, ngắn gọn** và có **prefix theo chuẩn**
 - **FIGMA**: https://www.figma.com/design/kkzKtCGMOUbZvQ28taieeq/EMOB?node-id=1-55&t=WiJ96yI8KLM5noFV-0
 - **USECASE DIAGRAM**: https://drive.google.com/file/d/1SPvgSIz0pLcHsAXjt_-iX4Nuomv9oLWE/view
 - **ERD**: https://drive.google.com/file/d/1m4SbslLmKuduNeCj6kPdxNauEpzCLl4J/view
+- **API**: http://34.56.57.56:8080/swagger-ui/index.html
 
 
